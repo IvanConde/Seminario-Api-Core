@@ -1,0 +1,1 @@
+"""Core unified messaging system."""
