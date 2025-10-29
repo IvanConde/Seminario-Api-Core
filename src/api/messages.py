@@ -105,7 +105,7 @@ async def send_message(
         raise HTTPException(status_code=400, detail=f"Unsupported channel: {request.channel}")
     
     port = channel_ports[request.channel]
-    url = f"http://localhost:{port}/send/{request.channel}"
+    url = f"https://640da43608e1.ngrok-free.app/send/{request.channel}"
     
     # Formatear número para WhatsApp
     formatted_to = request.to
