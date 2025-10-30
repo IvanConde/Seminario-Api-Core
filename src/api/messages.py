@@ -103,7 +103,7 @@ async def send_message(
     
     if request.channel not in channel_ports:
         raise HTTPException(status_code=400, detail=f"Unsupported channel: {request.channel}")
-    
+    print("Sending message to channel:", request.channel)
     port = channel_ports[request.channel]
     if request.channel == "whatsapp":
         url = f"https://640da43608e1.ngrok-free.app/send/{request.channel}"
