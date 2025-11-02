@@ -110,7 +110,7 @@ async def send_message(
     elif request.channel == "gmail":
         url = f"https://lilah-tophaceous-overhonestly.ngrok-free.dev/send/{request.channel}"
     elif request.channel == "instagram":
-        url = "https://phyllomic-fernande-hedonistically.ngrok-free.dev/send/{request.channel}"
+        url = f"https://phyllomic-fernande-hedonistically.ngrok-free.dev/send/{request.channel}"
 
     # Formatear número para WhatsApp
     formatted_to = request.to
