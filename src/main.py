@@ -6,7 +6,7 @@ import asyncio
 from typing import List
 
 from src.database import init_db
-from src.api import messages, conversations, channels
+from src.api import messages, conversations, channels, analytics
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -76,6 +76,7 @@ app.add_middleware(
 app.include_router(messages.router, prefix="/api/v1", tags=["messages"])
 app.include_router(conversations.router, prefix="/api/v1", tags=["conversations"])
 app.include_router(channels.router, prefix="/api/v1", tags=["channels"])
+app.include_router(analytics.router, prefix="/api/v1", tags=["analytics"])
 
 @app.get("/")
 async def root():
