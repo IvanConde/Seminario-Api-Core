@@ -54,6 +54,10 @@ La API estará disponible en: `http://localhost:8003`
 - `GET /api/v1/channels` - Obtener canales activos
 - `GET /api/v1/channels/{name}/stats` - Estadísticas del canal
 
+### Analytics
+- `GET /api/v1/analytics/dashboard` - Dashboard con métricas generales y semanales
+  - Incluye: FRT promedio, % respondido en 24h, mensajes por canal, comparativa semanal
+
 ### WebSocket
 - `WS /ws` - Conexión WebSocket para mensajes en tiempo real
 
