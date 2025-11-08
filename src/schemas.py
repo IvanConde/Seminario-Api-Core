@@ -80,3 +80,40 @@ class SendMessageResponse(BaseModel):
     message_id: Optional[str] = None
     error: Optional[str] = None
     details: Optional[dict] = None
+
+# Authentication schemas
+class UserRegister(BaseModel):
+    """Schema para registro de usuario"""
+    username: str
+    email: str
+    password: str
+
+class UserLogin(BaseModel):
+    """Schema para login de usuario"""
+    username: str  # Puede ser username o email
+    password: str
+
+class Token(BaseModel):
+    """Schema para token JWT"""
+    access_token: str
+    token_type: str = "bearer"
+
+class UserResponse(BaseModel):
+    """Schema para respuesta de usuario"""
+    id: int
+    username: str
+    email: str
+    role: str
+    is_active: bool
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+class UserRoleUpdate(BaseModel):
+    """Schema para actualizar rol de usuario"""
+    role: str  # "admin" o "colaborador"
+
+class UserStatusUpdate(BaseModel):
+    """Schema para actualizar estado de usuario"""
+    is_active: bool

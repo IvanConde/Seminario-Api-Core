@@ -18,8 +18,6 @@ fi
 echo "🔧 Activating virtual environment..."
 source venv/bin/activate
 
-echo "📥 Installing dependencies..."
-pip install -r requirements.txt
 
 echo "🗄️  Starting database initialization..."
 python -c "from src.database import init_db; import asyncio; asyncio.run(init_db())"

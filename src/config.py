@@ -18,6 +18,16 @@ class Settings(BaseSettings):
     # Core settings
     core_secret_key: str = "your-secret-key-here"
     
+    # JWT settings
+    jwt_secret_key: str = "your-jwt-secret-key-change-in-production"
+    jwt_algorithm: str = "HS256"
+    jwt_access_token_expire_minutes: int = 30
+    
+    # Admin default credentials
+    admin_username: str = "admin"
+    admin_email: str = "admin@example.com"
+    admin_password: str = "admin123"  # Cambiar en producción
+    
     @property
     def database_url(self) -> str:
         return f"mysql+pymysql://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
