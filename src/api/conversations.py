@@ -4,7 +4,11 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 
 from src.database import get_db
-from src.schemas import ConversationResponse, ConversationCreate
+from src.schemas import (
+    ConversationResponse,
+    ConversationCreate,
+    ConversationCategoryUpdate,
+)
 from src.services.conversation_service import ConversationService
 from src.utils.logger import get_logger
 
@@ -88,3 +92,16 @@ async def deactivate_conversation(
     if not success:
         raise HTTPException(status_code=404, detail="Conversation not found")
     return {"status": "success", "message": "Conversation deactivated"}
+
+
+@router.put("/conversations/category", response_model=ConversationResponse)
+async def update_conversation_category(
+    update: ConversationCategoryUpdate,
+    db: Session = Depends(get_db)
+):
+    """Actualizar la categoría de una conversación."""
+    service = ConversationService(db)
+    conversation = await service.update_conversation_category(update)
+    if not conversation:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+    return conversation

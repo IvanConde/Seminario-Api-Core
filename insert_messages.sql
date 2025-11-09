@@ -2,32 +2,32 @@
 -- SEMANA ANTERIOR: 27/10/2025 – 02/11/2025
 -- =========================================================
 -- Conversaciones
-INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, created_at, updated_at)
-SELECT id, 'conv_whatsapp_aaa_20251027', '+54911-AAA', NULL, TRUE, '2025-10-27 12:00:00', '2025-10-27 12:03:00'
+INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, category, created_at, updated_at)
+SELECT id, 'conv_whatsapp_aaa_20251027', '+54911-AAA', NULL, TRUE, 'consulta', '2025-10-27 12:00:00', '2025-10-27 12:03:00'
 FROM channels WHERE name = 'whatsapp' LIMIT 1;
 
-INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, created_at, updated_at)
-SELECT id, 'conv_gmail_cliente1_20251027', 'cliente1@gmail.com', NULL, TRUE, '2025-10-27 15:00:00', '2025-10-27 15:00:00'
+INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, category, created_at, updated_at)
+SELECT id, 'conv_gmail_cliente1_20251027', 'cliente1@gmail.com', NULL, TRUE, 'consulta', '2025-10-27 15:00:00', '2025-10-27 15:00:00'
 FROM channels WHERE name = 'gmail' LIMIT 1;
 
-INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, created_at, updated_at)
-SELECT id, 'conv_instagram_ig_user_01_20251028', 'ig_user_01', NULL, TRUE, '2025-10-28 14:10:00', '2025-10-28 14:14:00'
+INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, category, created_at, updated_at)
+SELECT id, 'conv_instagram_ig_user_01_20251028', 'ig_user_01', NULL, TRUE, 'pedido', '2025-10-28 14:10:00', '2025-10-28 14:14:00'
 FROM channels WHERE name = 'instagram' LIMIT 1;
 
-INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, created_at, updated_at)
-SELECT id, 'conv_whatsapp_bbb_20251029', '+54911-BBB', NULL, TRUE, '2025-10-29 10:00:00', '2025-10-29 10:05:00'
+INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, category, created_at, updated_at)
+SELECT id, 'conv_whatsapp_bbb_20251029', '+54911-BBB', NULL, TRUE, 'consulta', '2025-10-29 10:00:00', '2025-10-29 10:05:00'
 FROM channels WHERE name = 'whatsapp' LIMIT 1;
 
-INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, created_at, updated_at)
-SELECT id, 'conv_gmail_cliente2_20251031', 'cliente2@gmail.com', NULL, TRUE, '2025-10-31 13:30:00', '2025-10-31 13:36:00'
+INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, category, created_at, updated_at)
+SELECT id, 'conv_gmail_cliente2_20251031', 'cliente2@gmail.com', NULL, TRUE, 'reclamo', '2025-10-31 13:30:00', '2025-10-31 13:36:00'
 FROM channels WHERE name = 'gmail' LIMIT 1;
 
-INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, created_at, updated_at)
-SELECT id, 'conv_instagram_ig_user_02_20251101', 'ig_user_02', NULL, TRUE, '2025-11-01 16:20:00', '2025-11-01 16:20:00'
+INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, category, created_at, updated_at)
+SELECT id, 'conv_instagram_ig_user_02_20251101', 'ig_user_02', NULL, TRUE, 'pedido', '2025-11-01 16:20:00', '2025-11-01 16:20:00'
 FROM channels WHERE name = 'instagram' LIMIT 1;
 
-INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, created_at, updated_at)
-SELECT id, 'conv_whatsapp_ccc_20251102', '+54911-CCC', NULL, TRUE, '2025-11-02 11:00:00', '2025-11-02 11:10:00'
+INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, category, created_at, updated_at)
+SELECT id, 'conv_whatsapp_ccc_20251102', '+54911-CCC', NULL, TRUE, 'consulta', '2025-11-02 11:00:00', '2025-11-02 11:10:00'
 FROM channels WHERE name = 'whatsapp' LIMIT 1;
 
 -- Mensajes
@@ -94,20 +94,20 @@ FROM conversations WHERE external_id = 'conv_whatsapp_ccc_20251102';
 -- SEMANA ACTUAL: 03/11/2025 – 09/11/2025
 -- =========================================================
 -- Conversaciones
-INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, created_at, updated_at)
-SELECT id, 'conv_gmail_cliente3_20251103', 'cliente3@gmail.com', NULL, TRUE, '2025-11-03 12:00:00', '2025-11-03 12:04:00'
+INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, category, created_at, updated_at)
+SELECT id, 'conv_gmail_cliente3_20251103', 'cliente3@gmail.com', NULL, TRUE, 'consulta', '2025-11-03 12:00:00', '2025-11-03 12:04:00'
 FROM channels WHERE name = 'gmail' LIMIT 1;
 
-INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, created_at, updated_at)
-SELECT id, 'conv_instagram_ig_user_03_20251105', 'ig_user_03', NULL, TRUE, '2025-11-05 18:30:00', '2025-11-05 18:33:00'
+INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, category, created_at, updated_at)
+SELECT id, 'conv_instagram_ig_user_03_20251105', 'ig_user_03', NULL, TRUE, 'pedido', '2025-11-05 18:30:00', '2025-11-05 18:33:00'
 FROM channels WHERE name = 'instagram' LIMIT 1;
 
-INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, created_at, updated_at)
-SELECT id, 'conv_whatsapp_aaa_20251106', '+54911-AAA', NULL, TRUE, '2025-11-06 14:00:00', '2025-11-06 14:06:00'
+INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, category, created_at, updated_at)
+SELECT id, 'conv_whatsapp_aaa_20251106', '+54911-AAA', NULL, TRUE, 'consulta', '2025-11-06 14:00:00', '2025-11-06 14:06:00'
 FROM channels WHERE name = 'whatsapp' LIMIT 1;
 
-INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, created_at, updated_at)
-SELECT id, 'conv_whatsapp_unknown_20251107', '+54911...', NULL, TRUE, '2025-11-07 00:00:00', '2025-11-07 00:03:00'
+INSERT INTO conversations (channel_id, external_id, participant_identifier, participant_name, is_active, category, created_at, updated_at)
+SELECT id, 'conv_whatsapp_unknown_20251107', '+54911...', NULL, TRUE, 'sin_categoria', '2025-11-07 00:00:00', '2025-11-07 00:03:00'
 FROM channels WHERE name = 'whatsapp' LIMIT 1;
 
 -- Mensajes

@@ -1,10 +1,16 @@
 """Conversation service for handling conversation operations."""
+from datetime import datetime
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
 from typing import List, Optional
 
-from src.models import Conversation, Channel, Message
-from src.schemas import ConversationCreate, ConversationResponse, MessageResponse
+from src.models import Conversation, Message, ConversationCategory
+from src.schemas import (
+    ConversationCreate,
+    ConversationResponse,
+    MessageResponse,
+    ConversationCategoryUpdate,
+)
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -90,3 +96,29 @@ class ConversationService:
             logger.info(f"Conversation {conversation_id} deactivated")
             return True
         return False
+
+    async def update_conversation_category(
+        self,
+        update_data: ConversationCategoryUpdate
+    ) -> Optional[ConversationResponse]:
+        conversation = self.db.query(Conversation).filter(Conversation.id == update_data.conversation_id).first()
+        if not conversation:
+            return None
+
+        conversation.category = ConversationCategory(update_data.category)
+
+        if update_data.updated_at:
+            conversation.updated_at = update_data.updated_at
+        else:
+            conversation.updated_at = datetime.utcnow()
+
+        self.db.commit()
+        self.db.refresh(conversation)
+
+        logger.info(
+            "Conversation %s category updated to %s",
+            conversation.id,
+            conversation.category.value,
+        )
+
+        return ConversationResponse.from_orm(conversation)

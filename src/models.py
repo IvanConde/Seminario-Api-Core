@@ -9,6 +9,13 @@ class UserRole(str, enum.Enum):
     ADMIN = "admin"
     COLABORADOR = "colaborador"
 
+
+class ConversationCategory(str, enum.Enum):
+    CONSULTA = "consulta"
+    PEDIDO = "pedido"
+    RECLAMO = "reclamo"
+    SIN_CATEGORIA = "sin_categoria"
+
 class User(Base):
     __tablename__ = "users"
     
@@ -42,6 +49,16 @@ class Conversation(Base):
     participant_name = Column(String(255))
     participant_identifier = Column(String(255), nullable=False)  # email, phone, username
     is_active = Column(Boolean, default=True)
+    category = Column(
+        Enum(
+            ConversationCategory,
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+            native_enum=False,
+            validate_strings=True,
+        ),
+        nullable=False,
+        default=ConversationCategory.SIN_CATEGORIA,
+    )
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     

@@ -2,6 +2,14 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional, List
+from enum import Enum
+
+
+class ConversationCategory(str, Enum):
+    CONSULTA = "consulta"
+    PEDIDO = "pedido"
+    RECLAMO = "reclamo"
+    SIN_CATEGORIA = "sin_categoria"
 
 class MessageBase(BaseModel):
     content: str
@@ -30,6 +38,7 @@ class ConversationBase(BaseModel):
     participant_name: Optional[str] = None
     participant_identifier: str
     is_active: bool = True
+    category: ConversationCategory = ConversationCategory.SIN_CATEGORIA
 
 class ConversationCreate(ConversationBase):
     channel_id: int
@@ -45,6 +54,11 @@ class ConversationResponse(ConversationBase):
     
     class Config:
         from_attributes = True
+
+class ConversationCategoryUpdate(BaseModel):
+    conversation_id: int
+    category: ConversationCategory
+    updated_at: Optional[datetime] = None
 
 class ChannelResponse(BaseModel):
     id: int
