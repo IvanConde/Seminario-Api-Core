@@ -1,13 +1,16 @@
 from fastapi import APIRouter, Request, HTTPException, Depends
-import openai, os, requests
+import os, requests
 from sqlalchemy.orm import Session
-from database import get_db
-from services.conversation_service import ConversationService
+from src.database import get_db
+from src.services.conversation_service import ConversationService
+from src.config import settings
+#from openai import OpenAI
+import openai
 
 router = APIRouter()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = openai.OpenAI(api_key=settings.openai_api_key)
 
-@router.post("/suggest_reply")
+@router.post("/ia_service/suggest_reply")
 async def suggest_reply(request: Request, db: Session = Depends(get_db)):
     body = await request.json()
     conversation_id = body["conversation_id"]
@@ -32,11 +35,10 @@ async def suggest_reply(request: Request, db: Session = Depends(get_db)):
     """
 
     # 4️⃣ Llamar al modelo
-    completion = openai.ChatCompletion.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}],
+    completion = client.responses.create(
+    model="gpt-4o-mini",
+    input=prompt,
     )
-
-    suggestion = completion.choices[0].message["content"]
+    suggestion = completion.output[0].content[0].text
 
     return {"suggestion": suggestion}

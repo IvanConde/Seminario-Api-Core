@@ -26,7 +26,10 @@ class Settings(BaseSettings):
     # Admin default credentials
     admin_username: str = "admin"
     admin_email: str = "admin@example.com"
-    admin_password: str = "admin123"  # Cambiar en producción
+    admin_password: str = "admin123"
+    
+    #Openia
+    openai_api_key: Optional[str] = None  # Cambiar en producción
     
     @property
     def database_url(self) -> str:
