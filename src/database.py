@@ -28,7 +28,7 @@ def get_db():
 
 async def init_db():
     """Initialize database tables."""
-    from src.models import Channel, Conversation, Message, User, UserRole
+    from src.models import Channel, Conversation, Message, User, UserRole, HistoryEntry
     from src.utils.security import get_password_hash
     from src.config import settings
     

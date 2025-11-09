@@ -81,6 +81,30 @@ class SendMessageResponse(BaseModel):
     error: Optional[str] = None
     details: Optional[dict] = None
 
+
+class HistoryCreate(BaseModel):
+    user: str
+    action: str
+    action_type: str
+    details: str
+    endpoint: Optional[str] = None
+    method: Optional[str] = None
+
+
+class HistoryEntryResponse(BaseModel):
+    id: int
+    date: str
+    time: str
+    user: str
+    action: str
+    actionType: str
+    details: str
+
+
+class HistoryStatsResponse(BaseModel):
+    action_type: str
+    count: int
+
 # Authentication schemas
 class UserRegister(BaseModel):
     """Schema para registro de usuario"""

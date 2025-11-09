@@ -6,7 +6,7 @@ import asyncio
 from typing import List
 
 from src.database import init_db
-from src.api import messages, conversations, channels, analytics, auth
+from src.api import messages, conversations, channels, analytics, auth, history
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -78,6 +78,7 @@ app.include_router(messages.router, prefix="/api/v1", tags=["messages"])
 app.include_router(conversations.router, prefix="/api/v1", tags=["conversations"])
 app.include_router(channels.router, prefix="/api/v1", tags=["channels"])
 app.include_router(analytics.router, prefix="/api/v1", tags=["analytics"])
+app.include_router(history.router, prefix="/api/v1", tags=["history"])
 
 @app.get("/")
 async def root():

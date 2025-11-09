@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     db_port: int = 3306
     db_name: str = "unified_messaging"
     db_user: str = "root"
-    db_password: str = ""
+    db_password: str = "tadmorion44"
     
     # API settings
     api_host: str = "0.0.0.0"

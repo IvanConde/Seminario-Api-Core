@@ -67,3 +67,16 @@ class Message(Base):
     
     # Relationships
     conversation = relationship("Conversation", back_populates="messages")
+
+
+class HistoryEntry(Base):
+    __tablename__ = "history"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user = Column(String(255), nullable=False)
+    action = Column(String(255), nullable=False)
+    action_type = Column(String(50), nullable=False)
+    details = Column(Text, nullable=False)
+    endpoint = Column(String(255))
+    method = Column(String(20))
+    created_at = Column(DateTime, default=datetime.utcnow)
