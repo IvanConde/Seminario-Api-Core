@@ -21,9 +21,14 @@ async def suggest_reply(request: Request, db: Session = Depends(get_db)):
     if not conversation:
         raise HTTPException(status_code=404, detail="Conversation not found")
 
-    # 2️⃣ Preparar el contexto
-    messages = conversation.messages[-10:]  # solo los últimos 10
+    # 2️⃣ Preparar el contexto (últimos 10 mensajes ordenados por timestamp)
+    sorted_messages = sorted(
+        conversation.messages,
+        key=lambda m: m.timestamp or m.created_at
+    )
+    messages = sorted_messages[-10:]
     context = "\n".join([f"{m.sender_name}: {m.content}" for m in messages])
+    print("[IA suggest_reply] Contexto utilizado:\n", context)
 
     # 3️⃣ Crear el prompt
     prompt = f"""
