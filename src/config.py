@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     # Core settings
     core_secret_key: str = "your-secret-key-here"
     
+    # OpenAI settings
+    openai_api_key: Optional[str] = None
+    
     @property
     def database_url(self) -> str:
         return f"mysql+pymysql://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
