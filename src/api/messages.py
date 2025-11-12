@@ -96,9 +96,9 @@ async def send_message(
     import httpx
     
     channel_ports = {
-        "whatsapp": 8001,  # Puerto correcto del WhatsApp Service
-        "gmail": 8002,
-        "instagram": 8003
+        "whatsapp": 8000,  # Puerto correcto del WhatsApp Service
+        "gmail": 8001,
+        "instagram": 8002
     }
     
     if request.channel not in channel_ports:
