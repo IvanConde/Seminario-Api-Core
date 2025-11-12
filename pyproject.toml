@@ -19,6 +19,7 @@ python-multipart = "^0.0.6"
 python-jose = {extras = ["cryptography"], version = "^3.5.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 bcrypt = "^4.1.2"
+openai = "^2.7.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
