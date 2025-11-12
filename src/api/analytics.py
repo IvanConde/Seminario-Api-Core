@@ -6,7 +6,7 @@ from typing import Dict
 from src.database import get_db
 from src.services.analytics_service import AnalyticsService
 from src.utils.logger import get_logger
-from src.api.auth import get_current_admin
+from src.api.auth import get_current_user
 
 logger = get_logger(__name__)
 router = APIRouter()
@@ -14,12 +14,12 @@ router = APIRouter()
 
 @router.get("/analytics/dashboard")
 async def get_dashboard(
-    current_admin = Depends(get_current_admin),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ) -> Dict:
     """
     Obtener dashboard con métricas generales y semanales.
-    Solo accesible por administradores.
+    Requiere un usuario autenticado sin restricción de rol.
     
     Retorna:
     - general: Métricas históricas completas
