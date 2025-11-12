@@ -12,10 +12,12 @@ router = APIRouter()
 
 
 @router.get("/analytics/dashboard")
-async def get_dashboard(db: Session = Depends(get_db)) -> Dict:
+async def get_dashboard(
+    db: Session = Depends(get_db),
+) -> Dict:
     """
     Obtener dashboard con métricas generales y semanales.
-    
+
     Retorna:
     - general: Métricas históricas completas
     - semana_anterior: Métricas de la semana pasada (lunes-domingo)
