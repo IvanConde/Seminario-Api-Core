@@ -106,7 +106,7 @@ async def send_message(
     print("Sending message to channel:", request.channel)
     port = channel_ports[request.channel]
     if request.channel == "whatsapp":
-        url = f"https://640da43608e1.ngrok-free.app/send/{request.channel}"
+        url = f"https://dawne-umbellately-annett.ngrok-free.dev/send/{request.channel}"
     elif request.channel == "gmail":
         url = f"https://lilah-tophaceous-overhonestly.ngrok-free.dev/send/{request.channel}"
     elif request.channel == "instagram":
