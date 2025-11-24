@@ -11,6 +11,16 @@ from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+def extract_email_from_sender(sender: str) -> str:
+    """Extract clean email from Gmail format like 'Name <email@domain.com>'."""
+    import re
+    # Buscar email entre < >
+    match = re.search(r'<([^>]+)>', sender)
+    if match:
+        return match.group(1)
+    # Si no hay < >, devolver el sender tal cual
+    return sender
+
 class MessageService:
     def __init__(self, db: Session):
         self.db = db
@@ -54,17 +64,28 @@ class MessageService:
     
     async def process_unified_message(self, unified_msg: UnifiedMessage) -> MessageResponse:
         """Process a unified message from channel services."""
+        # Limpiar el sender si viene en formato Gmail "Name <email>"
+        clean_sender = extract_email_from_sender(unified_msg.sender)
+        
         # Find or create conversation
         conversation = await self._get_or_create_conversation(
             channel_name=unified_msg.channel,
-            participant_identifier=unified_msg.sender
+            participant_identifier=clean_sender
         )
         
         # Parse timestamp
         try:
+            from datetime import timezone, timedelta
+            # Parsear el timestamp que viene (generalmente en UTC)
             timestamp = datetime.fromisoformat(unified_msg.timestamp.replace('Z', '+00:00'))
+            
+            # Convertir de UTC a Argentina (UTC-3)
+            argentina_tz = timezone(timedelta(hours=-3))
+            timestamp = timestamp.astimezone(argentina_tz)
         except:
-            timestamp = datetime.utcnow()
+            # Si falla el parsing, usar hora actual de Argentina (UTC-3)
+            argentina_tz = timezone(timedelta(hours=-3))
+            timestamp = datetime.now(argentina_tz)
         
         # Create message
         message_data = MessageCreate(
@@ -74,7 +95,7 @@ class MessageService:
             message_type=unified_msg.message_type,
             direction="incoming",
             sender_name=unified_msg.sender_name,
-            sender_identifier=unified_msg.sender,
+            sender_identifier=clean_sender,
             timestamp=timestamp
         )
         

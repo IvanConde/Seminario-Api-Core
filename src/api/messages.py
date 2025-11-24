@@ -43,6 +43,26 @@ async def receive_unified_message(
     db: Session = Depends(get_db)
 ):
     """Endpoint para recibir mensajes unificados de los servicios de canal."""
+    # Log del mensaje recibido en archivo
+    import json
+    from datetime import datetime
+    log_entry = {
+        "timestamp": datetime.now().isoformat(),
+        "direction": "incoming",
+        "channel": message.channel,
+        "sender": message.sender,
+        "message": message.message,
+        "message_id": message.message_id,
+        "message_type": message.message_type,
+        "original_timestamp": message.timestamp
+    }
+    
+    try:
+        with open("logs/incoming_messages.txt", "a", encoding="utf-8") as f:
+            f.write(json.dumps(log_entry, ensure_ascii=False) + "\n")
+    except Exception as log_error:
+        logger.error(f"Error writing to incoming log file: {log_error}")
+    
     service = MessageService(db)
     try:
         result = await service.process_unified_message(message)
@@ -137,14 +157,32 @@ async def send_message(
     if request.media_url:
         payload["media_url"] = request.media_url
     
+    # Log del body que se envía a la API externa en archivo
+    import json
+    from datetime import datetime
+    log_entry = {
+        "timestamp": datetime.now().isoformat(),
+        "channel": request.channel,
+        "url": url,
+        "payload": payload
+    }
+    
+    try:
+        with open("logs/outgoing_messages.txt", "a", encoding="utf-8") as f:
+            f.write(json.dumps(log_entry, ensure_ascii=False) + "\n")
+    except Exception as log_error:
+        logger.error(f"Error writing to log file: {log_error}")
+    
     try:
         async with httpx.AsyncClient() as client:
             response = await client.post(url, json=payload)
             result = response.json()
             
-            if response.status_code == 200 and result.get("success"):
-                # Store outgoing message in database
-                service = MessageService(db)
+            logger.info(f"Response from {request.channel} service: status={response.status_code}, result={result}")
+            
+            # Store outgoing message in database SIEMPRE (independiente del resultado de la API)
+            service = MessageService(db)
+            try:
                 # Find conversation
                 conversation = await service._get_or_create_conversation(
                     channel_name=request.channel,
@@ -161,7 +199,7 @@ async def send_message(
                 
                 message_data = MessageCreate(
                     conversation_id=conversation.id,
-                    external_message_id=result.get("message_id"),
+                    external_message_id=result.get("message_id") if result.get("success") else None,
                     content=request.message,
                     message_type=request.message_type,
                     direction="outgoing",
@@ -170,7 +208,11 @@ async def send_message(
                 )
                 
                 await service.create_message(message_data)
-                
+                logger.info(f"Outgoing message persisted in DB for {request.channel}")
+            except Exception as db_error:
+                logger.error(f"Error persisting outgoing message in DB: {str(db_error)}")
+            
+            if response.status_code == 200 and result.get("success"):
                 return SendMessageResponse(
                     success=True,
                     message_id=result.get("message_id"),
