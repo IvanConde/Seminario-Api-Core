@@ -153,7 +153,11 @@ async def send_message(
                 
                 # Create message record
                 from src.schemas import MessageCreate
-                from datetime import datetime
+                from datetime import datetime, timezone, timedelta
+                
+                # Usar timezone de Argentina (UTC-3)
+                argentina_tz = timezone(timedelta(hours=-3))
+                current_time = datetime.now(argentina_tz)
                 
                 message_data = MessageCreate(
                     conversation_id=conversation.id,
@@ -162,7 +166,7 @@ async def send_message(
                     message_type=request.message_type,
                     direction="outgoing",
                     sender_identifier="system",  # Or current user
-                    timestamp=datetime.utcnow()
+                    timestamp=current_time
                 )
                 
                 await service.create_message(message_data)
